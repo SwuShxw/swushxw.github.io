@@ -304,7 +304,7 @@ body {
 }
 @media screen and (max-width: 576px) {
   .recent-posts .recent-post-item .post-excerpt {
-    display: none;
+    display: block;
   }
 }
 .recent-posts .recent-post-item .post-meta {
