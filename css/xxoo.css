@@ -296,7 +296,7 @@ body {
   margin: 15px auto;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-top: block;
+  border-top: none;
 }
 .recent-posts .recent-post-item .post-excerpt {
   color: #999;
@@ -304,7 +304,7 @@ body {
 }
 @media screen and (max-width: 576px) {
   .recent-posts .recent-post-item .post-excerpt {
-    display: block;
+    display: none;
   }
 }
 .recent-posts .recent-post-item .post-meta {
