@@ -11,15 +11,15 @@
   <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
   
   
-    <meta name="keywords" content="UnsupportOperationException异常,Arrays.asList(),asList,">
+    <meta name="keywords" content="Java,Java入门,JDK,环境变量,">
   
 
   
-    <meta name="description" content="浅谈Arrays.asList()抛出UnsupportOperationException异常">
+    <meta name="description" content="Java入门简介以及环境搭建(JDK安装&amp;配置环境变量)">
   
   
   <link rel="icon" type="image/x-icon" href="/img/swuixw.png">
-  <title>浅谈Arrays.asList()抛出UnsupportOperationException异常 [ 筱炜的博客 ]</title>
+  <title>Java入门简介以及环境搭建(JDK安装&amp;配置环境变量) [ 筱炜的博客 ]</title>
   
     <!-- stylesheets list from config.yml -->
     
@@ -64,19 +64,19 @@
   <article class="post" id="post">
     <header class="post-header text-center">
       <h1 class="title">
-        浅谈Arrays.asList()抛出UnsupportOperationException异常
+        Java入门简介以及环境搭建(JDK安装&amp;配置环境变量)
       </h1>
       <span>
         
-        <time class="time" datetime="2016-11-09T05:52:19.000Z">
-        2016-11-09
+        <time class="time" datetime="2016-11-07T12:38:57.000Z">
+        2016-11-07
       </time>
         
       </span>
       <span class="slash">/</span>
       <span class="post-meta">
       <span class="post-tags">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Arrays-asList/">Arrays.asList()</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UnsupportOperationException异常/">UnsupportOperationException异常</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asList/">asList</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDK/">JDK</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java入门/">Java入门</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环境变量/">环境变量</a></li></ul>
       </span>
     </span>
       <span class="slash">/</span>
@@ -88,24 +88,37 @@
     </header>
 
     <div class="post-content">
-      <p>初学数组常见的坑之一，执行Arrays.asList()时抛出UnsupportOperationException异常</p>
+      <p>Java语言概述：Java语言是美国Sun公司（Stanford University Network），在1995年推出的高级的编程语言。所谓编程语言，是计算机的语言，人们可以使用编程语言对计算机下达命令，让计算机完成人们需要的功能。</p>
 <a id="more"></a>
-<p>前言：</p>
-<p>写数组那篇文章不禁想起了以前做呆莫的时候遇到一个小坑，是什么呢？就是万恶的基础知识不是很牢（cai）固（ji）！操作数组与集合之间相互转化时报了一个 UnsupportOperationException 异常。</p>
-<p>现场极简还原：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String array[] = &#123;<span class="string">"test data-string"</span>&#125;;</span><br><span class="line">List array2list = Arrays.asList(array);</span><br><span class="line">array2list.add(<span class="string">"test data-list"</span>);</span><br><span class="line"><span class="comment">//执行以上代码就会抛出 UnsupportOperationException 异常。异常是第三行导致的。</span></span><br><span class="line">Exception in thread <span class="string">"main"</span> java.lang.UnsupportedOperationException</span><br><span class="line">	at java.util.AbstractList.add(AbstractList.java:<span class="number">148</span>)</span><br><span class="line">	at java.util.AbstractList.add(AbstractList.java:<span class="number">108</span>)</span><br><span class="line">.....</span><br></pre></td></tr></table></figure>
-<p>才开始学习的时候，头发都掉了整整一根，这是尼玛何等卧槽。。。但还是没有想出来为啥子，最后还是机智的琢（bai）磨（du）出来了，先看AIP:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">asList</span><span class="params">(T... a)</span></span></span><br><span class="line"><span class="function">返回一个受指定数组支持的固定大小的列表。（对返回列表的更改会“直接写”到数组。）此方法同 Collection.<span class="title">toArray</span><span class="params">()</span> 一起，充当了基于数组的 API 与基于 collection 的 API 之间的桥梁。返回的列表是可序列化的，并且实现了 RandomAccess。</span></span><br><span class="line"><span class="function">此方法还提供了一个创建固定长度的列表的便捷方法，该列表被初始化为包含多个元素：</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">     List&lt;String&gt; stooges </span>= Arrays.asList(<span class="string">"Larry"</span>, <span class="string">"Moe"</span>, <span class="string">"Curly"</span>);</span><br><span class="line"> </span><br><span class="line">参数：</span><br><span class="line">a - 支持列表的数组。</span><br><span class="line">返回：</span><br><span class="line">指定数组的列表视图。</span><br></pre></td></tr></table></figure>
-<p>在操作数组执行Arrays.asList()调用add()、remove()…时出现 java.lang.UnsupportedOperationException异常。</p>
-<p>Arrays.asList() 返回定长的 List，不支持 add 和 remove 操作。</p>
-<p>Arrays.asList() 返回java.util.Arrays$ArrayList， 而不是ArrayList。返回的对象是一个Arrays内部类,并没有实现集合的修改方法。Arrays.asList体现的是适配器模式，只是转换接口，后台的数据仍是数组。</p>
-<p>Arrays$ArrayList和ArrayList都是继承AbstractList，remove，add等 method在AbstractList中是默认throw UnsupportedOperationException而且不作任何操作。</p>
-<p>ArrayList override这些method来对list进行操作，但是Arrays$ArrayList没有override remove()，add()等，所以throw UnsupportedOperationException。</p>
-<p>那有解决办法不？这不废话么！</p>
-<p>一解：老老实实的遍历数组，将数组的每个元素添加到集合中。不足于会降低程序执行效率。</p>
-<p>二解：使用了Arrays.asList()方法后将得到的集合再进行强转成集合类型。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String [] array = &#123;<span class="string">"test data-string"</span>&#125;;</span><br><span class="line"></span><br><span class="line">List&lt;String&gt; array2list = Arrays.asList(array);</span><br><span class="line"></span><br><span class="line">List&lt;String&gt; arrList = <span class="keyword">new</span> ArrayList&lt;String&gt;(array2list);</span><br><span class="line">arrList.add(<span class="string">"hello"</span>);</span><br><span class="line">        </span><br><span class="line">System.out.println(arrList);<span class="comment">//[test data-string, hello]</span></span><br></pre></td></tr></table></figure>
-<p>还有其他解决方案，在此不再赘述。</p>
+<h3 id="Java语言发展历史"><a href="#Java语言发展历史" class="headerlink" title="Java语言发展历史"></a>Java语言发展历史</h3><ol>
+<li>1995年Sun公司发布Java1.0版本</li>
+<li>1997年发布Java 1.1版本</li>
+<li>1998年发布Java 1.2版本</li>
+<li>2000年发布Java 1.3版本</li>
+<li>2002年发布Java 1.4版本</li>
+<li>2004年发布Java 1.5版本</li>
+<li>2006年发布Java 1.6版本</li>
+<li>2009年Oracle甲骨文公司收购Sun公司，并于2011发布Java 1.7版本</li>
+<li>2014年发布Java 1.8版本</li>
+<li>2017年发布Java 9.0版本</li>
+</ol>
+<p>Java语言主要应用在互联网程序的开发领域。常见的互联网程序比如天猫、京东、物流系统、网银系统等，以及服<br>务器后台处理大数据的存储、查询、数据挖掘等也有很多应用。</p>
+<h3 id="Java语言开发环境搭建"><a href="#Java语言开发环境搭建" class="headerlink" title="Java语言开发环境搭建"></a>Java语言开发环境搭建</h3><h4 id="JVM虚拟机"><a href="#JVM虚拟机" class="headerlink" title="JVM虚拟机"></a>JVM虚拟机</h4><p>学习开发环境之前，首先来了解一下JVM虚拟机。</p>
+<p>Java虚拟机，简称JVM，是运行所有Java程序的假想计算机，是Java程序的运行环境，是Java 最具吸引力的特性之一。我们编写的Java代码，都运行在JVM 之上。<br>跨平台：任何软件的运行，都必须要运行在操作系统之上，而我们用Java编写的软件可以运行在任何的操作系<br>统上，这个特性称为Java语言的跨平台特性。该特性是由JVM实现的，我们编写的程序运行在JVM上，而JVM<br>运行在操作系统上。</p>
+<p><img src="http://wx3.sinaimg.cn/mw690/0077hIeDly1fz1s2z0el7j30i5070q5d.jpg" alt="JVM"></p>
+<p>JDK与JRE：</p>
+<p>JRE (Java Runtime Environment) ：是Java程序的运行时环境，包含JVM 和运行时所需要的核心类库 。<br>JDK (Java Development Kit)：是Java程序开发工具包，包含JRE 和开发人员使用的工具。<br>我们想要运行一个已有的Java程序，那么只需安装JRE 即可。<br>我们想要开发一个全新的Java程序，那么必须安装JDK 。</p>
+<p><img src="http://wx3.sinaimg.cn/mw690/0077hIeDly1fz1s6a99rxj30n10f3n7o.jpg" alt="null"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//三者关系</span><br><span class="line">JDK &gt; JRE &gt; JVM</span><br></pre></td></tr></table></figure>
+<h4 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h4><p>安装的文件不要有中文和空格！（本文以jdk9为例）</p>
+<p><img src="http://wx3.sinaimg.cn/mw690/0077hIeDly1fz1salpnqaj30e40awwgq.jpg" alt="1547124983933"></p>
+<p><img src="http://wx1.sinaimg.cn/mw690/0077hIeDly1fz1sg2ha0ij30e70amtc8.jpg" alt="1547125280563"></p>
+<p><img src="http://wx2.sinaimg.cn/mw690/0077hIeDly1fz1sgrivh2j30e40awjto.jpg" alt="1547125346294"></p>
+<p><img src="http://wx1.sinaimg.cn/mw690/0077hIeDly1fz1sifa9ldj30ea0asmzm.jpg" alt="1547125427398"></p>
+<p><img src="http://wx1.sinaimg.cn/mw690/0077hIeDly1fz1sjyjhi8j30ed0astay.jpg" alt="1547125479599"></p>
+<h4 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h4><p>安装完JDK之后还需要配置系统的环境变量，因为程序开发中，需要用到JDK提高的工具包。</p>
+<p>环境变量的配置直接从百度爬过来的。附上连接，我就不一一截图了。</p>
+<p>[<a href="https://jingyan.baidu.com/article/d45ad148ba5ab169552b80d3.html]" target="_blank" rel="noopener">https://jingyan.baidu.com/article/d45ad148ba5ab169552b80d3.html]</a>:</p>
 
     </div>
 
@@ -113,6 +126,11 @@
   </article>
   <div class="toc-container">
     
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java语言发展历史"><span class="toc-text">Java语言发展历史</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java语言开发环境搭建"><span class="toc-text">Java语言开发环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JVM虚拟机"><span class="toc-text">JVM虚拟机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装JDK"><span class="toc-text">安装JDK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置环境变量"><span class="toc-text">配置环境变量</span></a></li></ol></li></ol>
+  </div>
+
 
   </div>
 </div>
@@ -133,16 +151,16 @@
       <div class="post-nav-item post-nav-next">
         
           <span>〈 </span>
-          <a href="/2016/11/09/Array/" rel="next" title="Array">
-          Array
+          <a href="/2016/11/06/hello-hexo/" rel="next" title="Hello Hexo">
+          Hello Hexo
           </a>
         
       </div>
   
       <div class="post-nav-item post-nav-prev">
           
-          <a href="/2019/01/10/String/" rel="prev" title="String">
-            String
+          <a href="/2016/11/08/Java面向对象知识点总结/" rel="prev" title="Java面向对象之三大特性">
+            Java面向对象之三大特性
           </a>
           <span>〉</span>
         
@@ -159,7 +177,7 @@
   <script>
     var disqus_shortname = 'XXX';
     
-    var disqus_url = 'http://yoursite.com/2016/11/09/浅谈Arrays.asList()抛出UnsupportOperationException异常/';
+    var disqus_url = 'http://yoursite.com/2016/11/07/Java入门/';
     
     (function(){
       var dsq = document.createElement('script');
