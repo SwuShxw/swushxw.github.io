@@ -87,7 +87,7 @@
       <p>前言：</p>
 <p>写数组那篇文章不禁想起了以前做呆莫的时候遇到一个小坑，是什么呢？就是万恶的基础知识不是很牢（cai）固（ji）！操作数组与集合之间相互转化时报了一个 UnsupportOperationException 异常。</p>
 <p>现场极简还原：</p>
-<p><img src="/2016/11/09/数组执行Arrays.asList()抛出UnsupportOperationException异常/数组执行Arrays.asList(" alt="UnsupportOperationException 异常">抛出UnsupportOperationException异常/e1.png)</p>
+<p><img src="/2016/11/09/浅谈Arrays.asList()抛出UnsupportOperationException异常/浅谈Arrays.asList(" alt="UnsupportOperationException 异常">抛出UnsupportOperationException异常/e1.png)</p>
 <p>才开始学习的时候，头发都掉了整整一根，这是尼玛何等卧槽。。。但还是没有想出来为啥子，最后还是机智的琢（bai）磨（du）出来了，先看AIP:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">asList</span><span class="params">(T... a)</span></span></span><br><span class="line"><span class="function">返回一个受指定数组支持的固定大小的列表。（对返回列表的更改会“直接写”到数组。）此方法同 Collection.<span class="title">toArray</span><span class="params">()</span> 一起，充当了基于数组的 API 与基于 collection 的 API 之间的桥梁。返回的列表是可序列化的，并且实现了 RandomAccess。</span></span><br><span class="line"><span class="function">此方法还提供了一个创建固定长度的列表的便捷方法，该列表被初始化为包含多个元素：</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">     List&lt;String&gt; stooges </span>= Arrays.asList(<span class="string">"Larry"</span>, <span class="string">"Moe"</span>, <span class="string">"Curly"</span>);</span><br><span class="line"> </span><br><span class="line">参数：</span><br><span class="line">a - 支持列表的数组。</span><br><span class="line">返回：</span><br><span class="line">指定数组的列表视图。</span><br></pre></td></tr></table></figure>
 <p>在操作数组执行Arrays.asList()调用add()、remove()…时出现 java.lang.UnsupportedOperationException异常。</p>
@@ -145,7 +145,7 @@
   <script>
     var disqus_shortname = 'XXX';
     
-    var disqus_url = 'http://yoursite.com/2016/11/09/数组执行Arrays.asList()抛出UnsupportOperationException异常/';
+    var disqus_url = 'http://yoursite.com/2016/11/09/浅谈Arrays.asList()抛出UnsupportOperationException异常/';
     
     (function(){
       var dsq = document.createElement('script');
