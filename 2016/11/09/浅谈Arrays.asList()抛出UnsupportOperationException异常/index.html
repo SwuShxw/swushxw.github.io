@@ -88,7 +88,9 @@
     </header>
 
     <div class="post-content">
-      <p>前言：</p>
+      <p>初学数组常见的坑之一，执行Arrays.asList()时抛出UnsupportOperationException异常</p>
+<a id="more"></a>
+<p>前言：</p>
 <p>写数组那篇文章不禁想起了以前做呆莫的时候遇到一个小坑，是什么呢？就是万恶的基础知识不是很牢（cai）固（ji）！操作数组与集合之间相互转化时报了一个 UnsupportOperationException 异常。</p>
 <p>现场极简还原：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String array[] = &#123;<span class="string">"test data-string"</span>&#125;;</span><br><span class="line">List array2list = Arrays.asList(array);</span><br><span class="line">array2list.add(<span class="string">"test data-list"</span>);</span><br><span class="line"><span class="comment">//执行以上代码就会抛出 UnsupportOperationException 异常。异常是第三行导致的。</span></span><br><span class="line">Exception in thread <span class="string">"main"</span> java.lang.UnsupportedOperationException</span><br><span class="line">	at java.util.AbstractList.add(AbstractList.java:<span class="number">148</span>)</span><br><span class="line">	at java.util.AbstractList.add(AbstractList.java:<span class="number">108</span>)</span><br><span class="line">.....</span><br></pre></td></tr></table></figure>
@@ -136,11 +138,6 @@
   
       <div class="post-nav-item post-nav-prev">
           
-          <a href="/2019/01/10/test/" rel="prev" title="test">
-            test
-          </a>
-          <span>〉</span>
-        
       </div>
     </div>
   
