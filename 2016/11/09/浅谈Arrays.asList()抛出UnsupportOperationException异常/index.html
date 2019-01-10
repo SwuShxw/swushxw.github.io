@@ -101,7 +101,7 @@
 <p>Arrays.asList() 返回java.util.Arrays$ArrayList， 而不是ArrayList。返回的对象是一个Arrays内部类,并没有实现集合的修改方法。Arrays.asList体现的是适配器模式，只是转换接口，后台的数据仍是数组。</p>
 <p>Arrays$ArrayList和ArrayList都是继承AbstractList，remove，add等 method在AbstractList中是默认throw UnsupportedOperationException而且不作任何操作。</p>
 <p>ArrayList override这些method来对list进行操作，但是Arrays$ArrayList没有override remove()，add()等，所以throw UnsupportedOperationException。</p>
-<p>那有解决办法不？这不废话么？</p>
+<p>那有解决办法不？这不废话么！</p>
 <p>一解：老老实实的遍历数组，将数组的每个元素添加到集合中。不足于会降低程序执行效率。</p>
 <p>二解：使用了Arrays.asList()方法后将得到的集合再进行强转成集合类型。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String [] array = &#123;<span class="string">"test data-string"</span>&#125;;</span><br><span class="line"></span><br><span class="line">List&lt;String&gt; array2list = Arrays.asList(array);</span><br><span class="line"></span><br><span class="line">List&lt;String&gt; arrList = <span class="keyword">new</span> ArrayList&lt;String&gt;(array2list);</span><br><span class="line">arrList.add(<span class="string">"hello"</span>);</span><br><span class="line">        </span><br><span class="line">System.out.println(arrList);<span class="comment">//[test data-string, hello]</span></span><br></pre></td></tr></table></figure>
