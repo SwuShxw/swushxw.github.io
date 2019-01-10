@@ -11,15 +11,15 @@
   <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
   
   
-    <meta name="keywords" content="Java,String,字符串,">
+    <meta name="keywords" content="UnsupportOperationException异常,Arrays.asList(),asList,">
   
 
   
-    <meta name="description" content="String">
+    <meta name="description" content="浅谈Arrays.asList()抛出UnsupportOperationException异常">
   
   
   <link rel="icon" type="image/x-icon" href="/img/swuixw.png">
-  <title>String [ 筱炜的博客 ]</title>
+  <title>浅谈Arrays.asList()抛出UnsupportOperationException异常 [ 筱炜的博客 ]</title>
   
     <!-- stylesheets list from config.yml -->
     
@@ -64,19 +64,19 @@
   <article class="post" id="post">
     <header class="post-header text-center">
       <h1 class="title">
-        String
+        浅谈Arrays.asList()抛出UnsupportOperationException异常
       </h1>
       <span>
         
-        <time class="time" datetime="2017-01-07T12:08:50.000Z">
-        2017-01-07
+        <time class="time" datetime="2016-11-10T05:52:19.000Z">
+        2016-11-10
       </time>
         
       </span>
       <span class="slash">/</span>
       <span class="post-meta">
       <span class="post-tags">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/String/">String</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/字符串/">字符串</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Arrays-asList/">Arrays.asList()</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UnsupportOperationException异常/">UnsupportOperationException异常</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asList/">asList</a></li></ul>
       </span>
     </span>
       <span class="slash">/</span>
@@ -88,7 +88,25 @@
     </header>
 
     <div class="post-content">
-      
+      <p>初学数组常见的坑之一，执行Arrays.asList()时抛出UnsupportOperationException异常</p>
+<a id="more"></a>
+<p>前言：</p>
+<p>写数组那篇文章不禁想起了以前做呆莫的时候遇到一个小坑，是什么呢？就是万恶的基础知识不是很牢（cai）固（ji）！操作数组与集合之间相互转化时报了一个 UnsupportOperationException 异常。</p>
+<p>现场极简还原：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String array[] = &#123;<span class="string">"test data-string"</span>&#125;;</span><br><span class="line">List array2list = Arrays.asList(array);</span><br><span class="line">array2list.add(<span class="string">"test data-list"</span>);</span><br><span class="line"><span class="comment">//执行以上代码就会抛出 UnsupportOperationException 异常。异常是第三行导致的。</span></span><br><span class="line">Exception in thread <span class="string">"main"</span> java.lang.UnsupportedOperationException</span><br><span class="line">	at java.util.AbstractList.add(AbstractList.java:<span class="number">148</span>)</span><br><span class="line">	at java.util.AbstractList.add(AbstractList.java:<span class="number">108</span>)</span><br><span class="line">.....</span><br></pre></td></tr></table></figure>
+<p>才开始学习的时候，头发都掉了整整一根，这是尼玛何等卧槽。。。但还是没有想出来为啥子，最后还是机智的琢（bai）磨（du）出来了，先看AIP:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">asList</span><span class="params">(T... a)</span></span></span><br><span class="line"><span class="function">返回一个受指定数组支持的固定大小的列表。（对返回列表的更改会“直接写”到数组。）此方法同 Collection.<span class="title">toArray</span><span class="params">()</span> 一起，充当了基于数组的 API 与基于 collection 的 API 之间的桥梁。返回的列表是可序列化的，并且实现了 RandomAccess。</span></span><br><span class="line"><span class="function">此方法还提供了一个创建固定长度的列表的便捷方法，该列表被初始化为包含多个元素：</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">     List&lt;String&gt; stooges </span>= Arrays.asList(<span class="string">"Larry"</span>, <span class="string">"Moe"</span>, <span class="string">"Curly"</span>);</span><br><span class="line"> </span><br><span class="line">参数：</span><br><span class="line">a - 支持列表的数组。</span><br><span class="line">返回：</span><br><span class="line">指定数组的列表视图。</span><br></pre></td></tr></table></figure>
+<p>在操作数组执行Arrays.asList()调用add()、remove()…时出现 java.lang.UnsupportedOperationException异常。</p>
+<p>Arrays.asList() 返回定长的 List，不支持 add 和 remove 操作。</p>
+<p>Arrays.asList() 返回java.util.Arrays$ArrayList， 而不是ArrayList。返回的对象是一个Arrays内部类,并没有实现集合的修改方法。Arrays.asList体现的是适配器模式，只是转换接口，后台的数据仍是数组。</p>
+<p>Arrays$ArrayList和ArrayList都是继承AbstractList，remove，add等 method在AbstractList中是默认throw UnsupportedOperationException而且不作任何操作。</p>
+<p>ArrayList override这些method来对list进行操作，但是Arrays$ArrayList没有override remove()，add()等，所以throw UnsupportedOperationException。</p>
+<p>那有解决办法不？这不废话么！</p>
+<p>一解：老老实实的遍历数组，将数组的每个元素添加到集合中。不足于会降低程序执行效率。</p>
+<p>二解：使用了Arrays.asList()方法后将得到的集合再进行强转成集合类型。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String [] array = &#123;<span class="string">"test data-string"</span>&#125;;</span><br><span class="line"></span><br><span class="line">List&lt;String&gt; array2list = Arrays.asList(array);</span><br><span class="line"></span><br><span class="line">List&lt;String&gt; arrList = <span class="keyword">new</span> ArrayList&lt;String&gt;(array2list);</span><br><span class="line">arrList.add(<span class="string">"hello"</span>);</span><br><span class="line">        </span><br><span class="line">System.out.println(arrList);<span class="comment">//[test data-string, hello]</span></span><br></pre></td></tr></table></figure>
+<p>还有其他解决方案，在此不再赘述。</p>
+
     </div>
 
     <div>全文完。</div>
@@ -115,15 +133,15 @@
       <div class="post-nav-item post-nav-next">
         
           <span>〈 </span>
-          <a href="/2016/11/09/浅谈Arrays.asList()抛出UnsupportOperationException异常/" rel="next" title="浅谈Arrays.asList()抛出UnsupportOperationException异常">
-          浅谈Arrays.asList()抛出UnsupportOperationException异常
+          <a href="/2016/11/10/Array/" rel="next" title="Array">
+          Array
           </a>
         
       </div>
   
       <div class="post-nav-item post-nav-prev">
           
-          <a href="/2017/01/10/集合/" rel="prev" title="集合">
+          <a href="/2016/11/12/集合/" rel="prev" title="集合">
             集合
           </a>
           <span>〉</span>
@@ -141,7 +159,7 @@
   <script>
     var disqus_shortname = 'XXX';
     
-    var disqus_url = 'http://yoursite.com/2017/01/07/String/';
+    var disqus_url = 'http://yoursite.com/2016/11/10/浅谈Arrays.asList()抛出UnsupportOperationException异常/';
     
     (function(){
       var dsq = document.createElement('script');
