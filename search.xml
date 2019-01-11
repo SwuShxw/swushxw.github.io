@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[test]]></title>
-    <url>%2F2019%2F01%2F11%2Ftest%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-  </entry>
-  <entry>
     <title><![CDATA[网络编程]]></title>
     <url>%2F2017%2F05%2F19%2F%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%2F</url>
     <content type="text"></content>
