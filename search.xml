@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[test2]]></title>
+    <url>%2F2019%2F01%2F11%2Ftest2%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>3333333</category>
+        <category>222222</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[test1]]></title>
+    <url>%2F2019%2F01%2F11%2Ftest1%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>222222</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[test]]></title>
+    <url>%2F2019%2F01%2F11%2Ftest%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>111111</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[网络程序设计]]></title>
     <url>%2F2017%2F05%2F19%2F%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%2F</url>
     <content type="text"></content>

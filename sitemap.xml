@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://swushxw.github.io/2019/01/11/test2/</loc>
+    
+    <lastmod>2019-01-11T13:10:49.289Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://swushxw.github.io/2019/01/11/test1/</loc>
+    
+    <lastmod>2019-01-11T13:10:18.635Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://swushxw.github.io/2019/01/11/test/</loc>
+    
+    <lastmod>2019-01-11T13:10:09.683Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://swushxw.github.io/2017/03/20/%E6%B5%85%E8%B0%88Arrays.asList()%E6%8A%9B%E5%87%BAUnsupportOperationException%E5%BC%82%E5%B8%B8/</loc>
     
     <lastmod>2019-01-11T13:07:42.333Z</lastmod>
