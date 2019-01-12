@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://swushxw.github.io/2017/03/09/hello-hexo/</loc>
+    
+    <lastmod>2019-01-12T06:59:13.744Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://swushxw.github.io/categories/index.html</loc>
     
     <lastmod>2019-01-11T14:03:10.444Z</lastmod>
@@ -96,13 +103,6 @@
     <loc>https://swushxw.github.io/tags/index.html</loc>
     
     <lastmod>2019-01-11T07:43:29.921Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://swushxw.github.io/2017/03/09/hello-hexo/</loc>
-    
-    <lastmod>2019-01-10T15:08:34.829Z</lastmod>
     
   </url>
   

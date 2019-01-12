@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://swushxw.github.io/2017/03/09/hello-hexo/</loc>
+    <lastmod>2019-01-12</lastmod>
+  </url>  <url>
     <loc>https://swushxw.github.io/2017/03/20/%E6%B5%85%E8%B0%88Arrays.asList()%E6%8A%9B%E5%87%BAUnsupportOperationException%E5%BC%82%E5%B8%B8/</loc>
     <lastmod>2019-01-11</lastmod>
   </url>  <url>
@@ -33,8 +36,5 @@
   </url>  <url>
     <loc>https://swushxw.github.io/2017/03/20/Array/</loc>
     <lastmod>2019-01-11</lastmod>
-  </url>  <url>
-    <loc>https://swushxw.github.io/2017/03/09/hello-hexo/</loc>
-    <lastmod>2019-01-10</lastmod>
   </url>
 </urlset>
