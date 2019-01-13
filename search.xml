@@ -40,8 +40,6 @@
       <tags>
         <tag>Java</tag>
         <tag>I/O流</tag>
-        <tag>字节流</tag>
-        <tag>字符流</tag>
         <tag>Reder</tag>
         <tag>Writer</tag>
         <tag>InputStream</tag>
@@ -87,7 +85,7 @@
         <category>异常</category>
       </categories>
       <tags>
-        <tag>UnsupportOperationException异常</tag>
+        <tag>异常</tag>
         <tag>Array</tag>
       </tags>
   </entry>
@@ -129,10 +127,7 @@
       <tags>
         <tag>Java</tag>
         <tag>流程控制语句</tag>
-        <tag>if else</tag>
-        <tag>switch</tag>
-        <tag>for</tag>
-        <tag>while&amp;do while</tag>
+        <tag>循环</tag>
       </tags>
   </entry>
   <entry>
