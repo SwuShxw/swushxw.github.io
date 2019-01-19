@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[SpringBoot入门]]></title>
-    <url>%2F2019%2F01%2F27%2FSpringBoot%E5%85%A5%E9%97%A8%2F</url>
-    <content type="text"><![CDATA[Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。通过这种方式，Spring Boot致力于在蓬勃发展的快速应用开发领域(rapid application development)成为领导者。 介绍SpringBoot之前，先来看看Spring框架。 Spring​ Spring是Java企业版（Java Enterprise Edition，JEE，也称J2EE）的轻量级代替品。无需开发重量级的EnterpriseJavaBean（EJB），Spring为企业级Java开发提供了一种相对简单的方法，通过依赖注入和面向切面编程，用简单的Java对象（Plain Old Java Object，POJO）实现了EJB的功能。 Spring的优点分析： ​ Spring是Java企业版（Java Enterprise Edition，JEE，也称J2EE）的轻量级代替品。无需开发重量级的EnterpriseJavaBean（EJB），Spring为企业级Java开发提供了一种相对简单的方法，通过依赖注入和面向切面编程，用简单的Java对象（Plain Old Java Object，POJO）实现了EJB的功能。 Spring的缺点分析： ​ 虽然Spring的组件代码是轻量级的，但它的配置却是重量级的。一开始，Spring用XML配置，而且是很多XML配置。Spring 2.5引入了基于注解的组件扫描，这消除了大量针对应用程序自身组件的显式XML配置。Spring 3.0引入了基于Java的配置，这是一种类型安全的可重构配置方式，可以代替XML。 所有这些配置都代表了开发时的损耗。因为在思考Spring特性配置和解决业务问题之间需要进行思维切换，所以编写配置挤占了编写应用程序逻辑的时间。和所有框架一样，Spring实用，但与此同时它要求的回报也不少。​ 除此之外，项目的依赖管理也是一件耗时耗力的事情。在环境搭建时，需要分析要导入哪些库的坐标，而且还需要分析导入与之有依赖关系的其他库的坐标，一旦选错了依赖的版本，随之而来的不兼容问题就会严重阻碍项目的开发进度。 SpringBoot概述​ SpringBoot对上述Spring的缺点进行的改善和优化，基于约定优于配置的思想，可以让开发人员不必在配置与逻辑业务之间进行思维的切换，全身心的投入到逻辑业务的代码编写中，从而大大提高了开发的效率，一定程度上缩短了项目周期。 SpringBoot特点 为基于Spring的开发提供更快的入门体验 开箱即用，没有代码生成，也无需XML配置。同时也可以修改默认值来满足特定的需求 提供了一些大型项目中常见的非功能性特性，如嵌入式服务器、安全、指标，健康检测、外部配置等 SpringBoot不是对Spring功能上的增强，而是提供了一种快速使用Spring的方式 SpringBoot核心功能起步依赖： 起步依赖本质上是一个Maven项目对象模型（Project Object Model，POM），定义了对其他库的传递依赖，这些东西加在一起即支持某项功能。简单的说，起步依赖就是将具备某种功能的坐标打包到一起，并提供一些默认的功能。 自动配置： Spring Boot的自动配置是一个运行时（更准确地说，是应用程序启动时）的过程，考虑了众多因素，才决定Spring配置应该用哪个，不该用哪个。该过程是Spring自动完成的。 SpringBoot快速入门1.创建Maven工程（开发工具为IDEA） 步骤如下： 点击next-&gt;finish即可，Maven工程就建好了，生成的所有文件不用管， 2.说明：自动生成的有一个类（类名可以自己改）为（如下）SpringBoot的引导类，通过启动引导类即可运行项目， 12345678package com.example;import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;@SpringBootApplicationpublic class SpringBootApplication &#123; public static void main(String[] args) &#123; SpringApplication.run(MySpringBootApplication.class); &#125; 3.编写Controller 在引导类SpringBootApplication同级包或者子级包中创建QuickStartController 123456789101112package com.example.controller;import org.springframework.stereotype.Controller;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.ResponseBody;@Controllerpublic class QuickStartController &#123; @RequestMapping("/quick") @ResponseBody public String quick()&#123; return "hello spring-boot"; &#125;&#125; 4.测试 运行引导类，控制台打印如下： 通过日志发现，Tomcat started on port(s): 8080 (http) with context path ‘’，tomcat已经起步，端口监听8080，web应用的虚拟工程名称为空，打开浏览器访问url地址为：http://localhost:8080/quick，效果如下： 快速入门解析SpringBoot代码解析： @SpringBootApplication：标注SpringBoot的启动类，该注解具备多种功能（后面详细剖析） SpringApplication.run(MySpringBootApplication.class) 代表运行SpringBoot的启动类，参数为SpringBoot启动类的字节码对象 SpringBoot工程热部署我们在开发中反复修改类、页面等资源，每次修改后都是需要重新启动才生效，这样每次启动都很麻烦，浪费了大量的时间，我们可以在修改代码后不重启就能生效，在 pom.xml 中添加如下配置就可以实现这样的功能，我们称之为热部署。 12345&lt;!--热部署配置--&gt;&lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-devtools&lt;/artifactId&gt;&lt;/dependency&gt; 说明：IDEA进行SpringBoot热部署失败原因，出现这种情况，并不是热部署配置问题，其根本原因是因为Intellij IEDA默认情况下不会自动编译，需要对IDEA进行自动编译的设置，如下：]]></content>
+    <title><![CDATA[Vue.js]]></title>
+    <url>%2F2019%2F01%2F18%2FVue%2F</url>
+    <content type="text"></content>
       <categories>
-        <category>Spring框架</category>
+        <category>前端框架</category>
       </categories>
       <tags>
-        <tag>Spring框架</tag>
-        <tag>SpringBoot</tag>
+        <tag>Vue</tag>
       </tags>
   </entry>
   <entry>
