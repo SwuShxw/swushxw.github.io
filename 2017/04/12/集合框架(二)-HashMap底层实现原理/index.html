@@ -131,8 +131,9 @@
 <p><strong>注意table初始大小并不是构造函数中的initialCapacity！！</strong></p>
 <p><strong>而是 &gt;= initialCapacity的2的n次幂！！！！</strong></p>
 <p>——为什么这么设计呢？——</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">来看看哈希冲突（来源：https://www.cnblogs.com/chengxiao/p/6059914.html）</span><br><span class="line">哈希冲突</span><br><span class="line">　　然而万事无完美，如果两个不同的元素，通过哈希函数得出的实际存储地址相同怎么办？也就是说，当我们对某个元素进行哈希运算，得到一个存储地址，然后要进行插入的时候，发现已经被其他元素占用了，其实这就是所谓的哈希冲突，也叫哈希碰撞。前面我们提到过，哈希函数的设计至关重要，好的哈希函数会尽可能地保证 计算简单和散列地址分布均匀,但是，我们需要清楚的是，数组是一块连续的固定长度的内存空间，再好的哈希函数也不能保证得到的存储地址绝对不发生冲突。那么哈希冲突如何解决呢？哈希冲突的解决方案有多种:开放定址法（发生冲突，继续寻找下一块未被占用的存储地址），再散列函数法，链地址法，而HashMap即是采用了链地址法，也就是数组+链表的方式，</span><br></pre></td></tr></table></figure>
-<h4 id="解决hash冲突的办法"><a href="#解决hash冲突的办法" class="headerlink" title="解决hash冲突的办法"></a><strong>解决hash冲突的办法</strong></h4><ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">来看看哈希冲突（来源：https://www.cnblogs.com/chengxiao/p/6059914.html）</span><br></pre></td></tr></table></figure>
+<p>哈希冲突（哈希碰撞）<br>　　然而万事无完美，如果两个不同的元素，通过哈希函数得出的实际存储地址相同怎么办？也就是说，当我们对某个元素进行哈希运算，得到一个存储地址，然后要进行插入的时候，发现已经被其他元素占用了，其实这就是所谓的哈希冲突，也叫哈希碰撞。前面我们提到过，哈希函数的设计至关重要，好的哈希函数会尽可能地保证 计算简单和散列地址分布均匀,但是，我们需要清楚的是，数组是一块连续的固定长度的内存空间，再好的哈希函数也不能保证得到的存储地址绝对不发生冲突。那么哈希冲突如何解决呢？哈希冲突的解决方案有多种:开放定址法（发生冲突，继续寻找下一块未被占用的存储地址），再散列函数法，链地址法，而HashMap即是采用了链地址法，也就是数组+链表的方式，</p>
+<h4 id="解决hash冲突（碰撞）的办法"><a href="#解决hash冲突（碰撞）的办法" class="headerlink" title="解决hash冲突（碰撞）的办法"></a><strong>解决hash冲突（碰撞）的办法</strong></h4><ol>
 <li>开放定址法（线性探测再散列，二次探测再散列，伪随机探测再散列）</li>
 <li>再哈希法</li>
 <li><strong>链地址法</strong></li>
@@ -152,7 +153,7 @@
     
   <div id="toc" class="toc-article">
     <strong class="toc-title">目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#HashMap的底层实现原理"><span class="toc-text">HashMap的底层实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HashMap的数据结构"><span class="toc-text">HashMap的数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HashMap的存取实现"><span class="toc-text">HashMap的存取实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解决hash冲突的办法"><span class="toc-text">解决hash冲突的办法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#再散列rehash过程"><span class="toc-text">再散列rehash过程</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#HashMap的底层实现原理"><span class="toc-text">HashMap的底层实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HashMap的数据结构"><span class="toc-text">HashMap的数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HashMap的存取实现"><span class="toc-text">HashMap的存取实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解决hash冲突（碰撞）的办法"><span class="toc-text">解决hash冲突（碰撞）的办法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#再散列rehash过程"><span class="toc-text">再散列rehash过程</span></a></li></ol></li></ol>
   </div>
 
 
