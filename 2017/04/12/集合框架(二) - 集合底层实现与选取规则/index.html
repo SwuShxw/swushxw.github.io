@@ -1,0 +1,382 @@
+
+<!DOCTYPE html>
+<html>
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#202020">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+  
+  
+    <meta name="keywords" content="Java,集合,List,Map,Set,Collection,">
+  
+
+  
+    <meta name="description" content="集合框架(二) - 集合底层实现与选用规则">
+  
+  
+  <link rel="icon" type="image/x-icon" href="/img/swuixw.png">
+  <title>集合框架(二) - 集合底层实现与选用规则 [ 筱炜的博客 ]</title>
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css">
+    
+      <link rel="stylesheet" href="/css/xoxo.css">
+    
+  
+</head>
+
+
+<body>
+
+  <div class="nav-container">
+    <nav class="home-menu pure-menu pure-menu-horizontal">
+  <a class="pure-menu-heading" href="/">
+    <img class="avatar" src="https://swushxw.github.io/img/swuixw.png">
+    <span class="title">筱炜的博客</span>
+  </a>
+
+  <ul class="pure-menu-list clearfix">
+      
+          
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">首页</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/archives" class="pure-menu-link">归档</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/tags" class="pure-menu-link">标签</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/categories" class="pure-menu-link">分类</a></li>
+          
+      
+          
+            <li class="pure-menu-item"><a href="/about" class="pure-menu-link">关于</a></li>
+          
+      
+  </ul>
+   
+</nav>
+  </div>
+
+  <div class="container" id="content-outer">
+    <div class="inner" id="content-inner">
+      <div class="post-container">
+  <article class="post" id="post">
+    <header class="post-header text-center">
+      <h1 class="title">
+        集合框架(二) - 集合底层实现与选用规则
+      </h1>
+      <span>
+        
+        <time class="time" datetime="2017-04-12T15:21:43.000Z">
+        2017-04-12
+      </time>
+        
+      </span>
+      <span class="slash">/</span>
+      <span class="post-meta">
+      <span class="post-tags">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/public/tags/Collection/">Collection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/public/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/public/tags/List/">List</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/public/tags/Map/">Map</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/public/tags/Set/">Set</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/public/tags/集合/">集合</a></li></ul>
+      </span>
+    </span>
+      <span class="slash">/</span>
+      <span class="read">
+      <span id="busuanzi_value_page_pv"></span> 点击
+    </span>
+      <span class="slash">/</span>
+      
+    </header>
+
+    <div class="post-content">
+      <p>集合的底层数据结构与选用规则</p>
+<a id="more"></a>   
+<h3 id="集合底层数据结构"><a href="#集合底层数据结构" class="headerlink" title="集合底层数据结构"></a><strong>集合底层数据结构</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">    Collection(单列集合)</span><br><span class="line">        List(有序,可重复)</span><br><span class="line">            ArrayList</span><br><span class="line">                底层数据结构是数组,查询快,增删慢</span><br><span class="line">                线程不安全,效率高</span><br><span class="line">            Vector</span><br><span class="line">                底层数据结构是数组,查询快,增删慢</span><br><span class="line">                线程安全,效率低</span><br><span class="line">            LinkedList</span><br><span class="line">                底层数据结构是链表,查询慢,增删快</span><br><span class="line">                线程不安全,效率高</span><br><span class="line">        Set(无序,唯一)</span><br><span class="line">            HashSet</span><br><span class="line">                底层数据结构是哈希表。</span><br><span class="line">                哈希表依赖两个方法：hashCode()和equals()</span><br><span class="line">                执行顺序：</span><br><span class="line">                    首先判断hashCode()值是否相同</span><br><span class="line">                        是：继续执行equals(),看其返回值</span><br><span class="line">                            是<span class="keyword">true</span>:说明元素重复，不添加</span><br><span class="line">                            是<span class="keyword">false</span>:就直接添加到集合</span><br><span class="line">                        否：就直接添加到集合</span><br><span class="line">                最终：</span><br><span class="line">                    自动生成hashCode()和equals()即可</span><br><span class="line">		LinkedHashSet</span><br><span class="line">                底层数据结构由链表和哈希表组成。</span><br><span class="line">                由链表保证元素有序。</span><br><span class="line">                由哈希表保证元素唯一。</span><br><span class="line">        TreeSet</span><br><span class="line">            底层数据结构是红黑树。(是一种自平衡的二叉树)</span><br><span class="line">            如何保证元素唯一性呢?</span><br><span class="line">                根据比较的返回值是否是<span class="number">0</span>来决定</span><br><span class="line">            如何保证元素的排序呢?</span><br><span class="line">                两种方式</span><br><span class="line">                    自然排序(元素具备比较性)</span><br><span class="line">                        让元素所属的类实现Comparable接口</span><br><span class="line">                    比较器排序(集合具备比较性)</span><br><span class="line">                        让集合接收一个Comparator的实现类对象</span><br><span class="line">Map(双列集合)</span><br><span class="line">    A:Map集合的数据结构仅仅针对键有效，与值无关。</span><br><span class="line">    B:存储的是键值对形式的元素，键唯一，值可重复。</span><br><span class="line">    </span><br><span class="line">    HashMap</span><br><span class="line">        底层数据结构是哈希表。线程不安全，效率高</span><br><span class="line">            哈希表依赖两个方法：hashCode()和equals()</span><br><span class="line">            执行顺序：</span><br><span class="line">                首先判断hashCode()值是否相同</span><br><span class="line">                    是：继续执行equals(),看其返回值</span><br><span class="line">                        是<span class="keyword">true</span>:说明元素重复，不添加</span><br><span class="line">                        是<span class="keyword">false</span>:就直接添加到集合</span><br><span class="line">                    否：就直接添加到集合</span><br><span class="line">            最终：</span><br><span class="line">                自动生成hashCode()和equals()即可</span><br><span class="line">        LinkedHashMap</span><br><span class="line">            底层数据结构由链表和哈希表组成。</span><br><span class="line">                由链表保证元素有序。</span><br><span class="line">                由哈希表保证元素唯一。</span><br><span class="line">    Hashtable</span><br><span class="line">        底层数据结构是哈希表。线程安全，效率低</span><br><span class="line">            哈希表依赖两个方法：hashCode()和equals()</span><br><span class="line">            执行顺序：</span><br><span class="line">                首先判断hashCode()值是否相同</span><br><span class="line">                    是：继续执行equals(),看其返回值</span><br><span class="line">                        是<span class="keyword">true</span>:说明元素重复，不添加</span><br><span class="line">                        是<span class="keyword">false</span>:就直接添加到集合</span><br><span class="line">                    否：就直接添加到集合</span><br><span class="line">            最终：</span><br><span class="line">                自动生成hashCode()和equals()即可</span><br><span class="line">    TreeMap</span><br><span class="line">        底层数据结构是红黑树。(是一种自平衡的二叉树)</span><br><span class="line">            如何保证元素唯一性呢?</span><br><span class="line">                根据比较的返回值是否是<span class="number">0</span>来决定</span><br><span class="line">            如何保证元素的排序呢?</span><br><span class="line">                两种方式</span><br><span class="line">                    自然排序(元素具备比较性)</span><br><span class="line">                        让元素所属的类实现Comparable接口</span><br><span class="line">                    比较器排序(集合具备比较性)</span><br><span class="line">                        让集合接收一个Comparator的实现类对象</span><br></pre></td></tr></table></figure>
+<h3 id="关于集合选用规则"><a href="#关于集合选用规则" class="headerlink" title="关于集合选用规则"></a><strong>关于集合选用规则</strong></h3><pre><code>是否是键值对象形式:
+    是：Map
+        键是否需要排序:
+            是：TreeMap
+            否：HashMap
+        未知，使用HashMap。
+
+    否：Collection
+        元素是否唯一:
+            是：Set
+                元素是否需要排序:
+                    是：TreeSet
+                    否：HashSet
+                未知，使用HashSet
+
+            否：List
+                要安全吗:
+                    是：Vector
+                    否：ArrayList或者LinkedList
+                        增删多：LinkedList
+                        查询多：ArrayList
+                    未知，使用ArrayList
+        未知，使用ArrayList
+</code></pre>
+    </div>
+
+    <div style="color: #2196F3">---------------------------------------------本文完，感谢您的阅读---------------------------------------------</div>
+  </article>
+  <div class="toc-container">
+    
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#集合底层数据结构"><span class="toc-text">集合底层数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于集合选用规则"><span class="toc-text">关于集合选用规则</span></a></li></ol>
+  </div>
+
+
+  </div>
+</div>
+<div class="copyright">
+    <span>本作品采用</span>
+    <a href="https://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>
+    <span>进行许可。 转载时请注明原文链接。</span>
+</div>
+<div class="share" style="width: 100%;">
+  <img src="http://wx4.sinaimg.cn/mw690/0077hIeDly1fz58snp402j308c08ct8k.jpg" alt="Running Geek" style="margin: auto; display: block;">
+
+  <div style="margin: auto; text-align: center; font-size: 0.9em; color: grey; color: #2196f3;">Learn from each other</div>
+  
+</div>
+
+  
+    <div class="post-nav">
+      <div class="post-nav-item post-nav-next">
+        
+          <span>〈 </span>
+          <a href="/2017/04/12/集合框架(三)-HashMap底层实现原理/" rel="next" title="集合框架(三)-HashMap底层实现原理">
+          集合框架(三)-HashMap底层实现原理
+          </a>
+        
+      </div>
+  
+      <div class="post-nav-item post-nav-prev">
+          
+          <a href="/2017/04/20/IO流/" rel="prev" title="I/O流">
+            I/O流
+          </a>
+          <span>〉</span>
+        
+      </div>
+    </div>
+  
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'XXX';
+    
+    var disqus_url = 'https://swushxw.github.io/2017/04/12/集合框架(二) - 集合底层实现与选取规则/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//XXX.disqus.com/count.js" async></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+
+  </div>
+  <footer class="footer text-center">
+    <div id="bottom-inner">
+        <a class="bottom-item" href="https://github.com/SwuShxw/swushxw.github.io.git">首页</a> |
+        <a class="bottom-item" href="https://github.com/SwuShxw" target="_blank">GitHub</a> |
+        <a class="bottom-item" href="https://hexo.io" target="_blank">Powered by hexo</a> |
+		<a class="bottom-item" href="https://github.com/KevinOfNeu/hexo-theme-xoxo" target="_blank">Theme xoxo</a>
+	</div>
+</footer>
+  
+
+<script>
+  (function(window, document, undefined) {
+
+    var timer = null;
+
+    function returnTop() {
+      cancelAnimationFrame(timer);
+      timer = requestAnimationFrame(function fn() {
+        var oTop = document.body.scrollTop || document.documentElement.scrollTop;
+        if (oTop > 0) {
+          document.body.scrollTop = document.documentElement.scrollTop = oTop - 50;
+          timer = requestAnimationFrame(fn);
+        } else {
+          cancelAnimationFrame(timer);
+        }
+      });
+    }
+
+    var hearts = [];
+    window.requestAnimationFrame = (function() {
+      return window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback) {
+          setTimeout(callback, 1000 / 60);
+        }
+    })();
+    init();
+
+    function init() {
+      css(".heart{z-index:9999;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+      attachEvent();
+      gameloop();
+      addMenuEvent();
+    }
+
+    function gameloop() {
+      for (var i = 0; i < hearts.length; i++) {
+        if (hearts[i].alpha <= 0) {
+          document.body.removeChild(hearts[i].el);
+          hearts.splice(i, 1);
+          continue;
+        }
+        hearts[i].y--;
+        hearts[i].scale += 0.004;
+        hearts[i].alpha -= 0.013;
+        hearts[i].el.style.cssText = "left:" + hearts[i].x + "px;top:" + hearts[i].y + "px;opacity:" + hearts[i].alpha + ";transform:scale(" + hearts[i].scale + "," + hearts[i].scale + ") rotate(45deg);background:" + hearts[i].color;
+      }
+      requestAnimationFrame(gameloop);
+    }
+
+    /**
+     * 给logo设置点击事件
+     * 
+     * - 回到顶部
+     * - 出现爱心
+     */
+    function attachEvent() {
+      var old = typeof window.onclick === "function" && window.onclick;
+      var logo = document.getElementById("logo");
+      if (logo) {
+        logo.onclick = function(event) {
+          returnTop();
+          old && old();
+          createHeart(event);
+        }
+      }
+      
+    }
+
+    function createHeart(event) {
+      var d = document.createElement("div");
+      d.className = "heart";
+      hearts.push({
+        el: d,
+        x: event.clientX - 5,
+        y: event.clientY - 5,
+        scale: 1,
+        alpha: 1,
+        color: randomColor()
+      });
+      document.body.appendChild(d);
+    }
+
+    function css(css) {
+      var style = document.createElement("style");
+      style.type = "text/css";
+      try {
+        style.appendChild(document.createTextNode(css));
+      } catch (ex) {
+        style.styleSheet.cssText = css;
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    function randomColor() {
+      // return "rgb(" + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + "," + (~~(Math.random() * 255)) + ")";
+      return "#F44336";
+    }
+
+    function addMenuEvent() {
+      var menu = document.getElementById('menu-main-post');
+      if (menu) {
+        var toc = document.getElementById('toc');
+        if (toc) {
+          menu.onclick = function() {
+            if (toc) {
+              if (toc.style.display == 'block') {
+                toc.style.display = 'none';
+              } else {
+                toc.style.display = 'block';
+              }
+            }
+          };
+        } else {
+          menu.style.display = 'none';
+        }
+      }
+    }
+
+  })(window, document);
+</script>
+
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?FuckUBaidu";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'XXX', 'auto');
+      ga('send', 'pageview');
+  </script>
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+  <!--浏览器搞笑标题-->
+  <script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <!--动态线条背景-->
+  <!-- <script type="text/javascript" -->
+  <!-- color="33,150,243" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"> -->
+  <!-- </script> -->
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
