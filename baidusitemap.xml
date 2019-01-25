@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://swushxw.github.io/2017/03/09/hello-hexo/</loc>
+    <lastmod>2019-01-25</lastmod>
+  </url>  <url>
+    <loc>https://swushxw.github.io/2017/03/19/String/</loc>
+    <lastmod>2019-01-25</lastmod>
+  </url>  <url>
     <loc>https://swushxw.github.io/2017/04/17/%E5%BC%82%E5%B8%B8/</loc>
     <lastmod>2019-01-24</lastmod>
   </url>  <url>
@@ -31,9 +37,6 @@
     <loc>https://swushxw.github.io/2017/05/13/Thread/</loc>
     <lastmod>2019-01-24</lastmod>
   </url>  <url>
-    <loc>https://swushxw.github.io/2017/03/19/String/</loc>
-    <lastmod>2019-01-24</lastmod>
-  </url>  <url>
     <loc>https://swushxw.github.io/2017/03/13/Java%E5%85%A5%E9%97%A8%E7%AE%80%E4%BB%8B%E4%BB%A5%E5%8F%8A%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA(JDK%E5%AE%89%E8%A3%85&%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F)/</loc>
     <lastmod>2019-01-24</lastmod>
   </url>  <url>
@@ -41,9 +44,6 @@
     <lastmod>2019-01-24</lastmod>
   </url>  <url>
     <loc>https://swushxw.github.io/2017/04/20/IO%E6%B5%81/</loc>
-    <lastmod>2019-01-24</lastmod>
-  </url>  <url>
-    <loc>https://swushxw.github.io/2017/03/09/hello-hexo/</loc>
     <lastmod>2019-01-24</lastmod>
   </url>  <url>
     <loc>https://swushxw.github.io/2019/01/19/Docker/</loc>
